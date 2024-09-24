@@ -1,0 +1,178 @@
+int dollar = 90, euro = 110;
+
+while (true)
+{
+    Random raddd = new Random();
+    float bankDollar = 0;
+    float bankEuro = 6.4f;
+    float bankRubles = raddd.Next(1, 1000);
+    int viborDeistvia;
+
+    Console.WriteLine("Добро пожаловать в обменник!");
+    Console.SetCursorPosition(0, 18);
+    Console.WriteLine($"Ваши сбережения: \n{bankEuro}-euro, \n{bankDollar}-dollar\n{bankRubles}-rub");
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.SetCursorPosition(0, 1);
+    try
+    {
+        Console.WriteLine("Выберите действие:\n1 - rub/usd. \n2 - rub/euro.\n3 - Перевести все в рубли " +
+            "\n4 - Выход");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("Ваш выбор: ");
+        viborDeistvia = Convert.ToInt32(Console.ReadLine());
+        switch (viborDeistvia)
+        {
+            case 1:
+                if (bankRubles > 0)
+                {
+                    Console.Write("Сколько рублей вы хотите обменять rub/usd: ");
+                    int spros = Convert.ToInt32(Console.ReadLine());
+                    if (spros <= bankRubles)
+                    {
+                        bankRubles -= spros;
+                        bankDollar += (float)spros / dollar;
+                        Console.WriteLine($"Теперь у вас в кармане {bankRubles} и {bankDollar}");
+                        Thread.Sleep(100);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Недостаточно средств");
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("У вас недостаточно средств");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    break;
+                }
+                break;
+            case 2:
+                if (bankRubles > 0)
+                {
+                    Console.Write("Назовите сумму которую хотите поменять на euro: ");
+                    int spros2 = Convert.ToInt32(Console.ReadLine());
+                    if (bankRubles >= spros2)
+                    {
+                        bankRubles -= spros2;
+                        bankEuro += (float)spros2 / euro;
+                        Console.WriteLine($"Теперь у вас есть {bankEuro} euro");
+                    }
+                    else
+                    {
+                        Console.WriteLine("У вас недостаточно средств");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("У вас недостаточно средств");
+                }
+                break;
+
+            case 3:
+                Console.WriteLine("1 - usd/rub.\n2 - euro/rub.\n3 - перевести euro+usd/rub");
+                Console.Write("Ваш выбор:");
+                viborDeistvia = Convert.ToInt32(Console.ReadLine());
+                switch (viborDeistvia)
+                {
+                    case 1:
+                        if (bankDollar > 0)
+                        {
+
+                            Console.Write("Сколько валюты хотите перевести: ");
+                            float spros = Convert.ToSingle(Console.ReadLine());
+                            if (spros <= bankDollar)
+                            {
+                                bankDollar -= spros;
+                                bankRubles += spros * Convert.ToSingle(dollar);
+                                Console.WriteLine($"Ваш баланс теперь usd - {bankDollar}, rub - {bankRubles}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Недостаточно средств, попробуйте снова.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Недостаточно средств");
+                        }
+
+                        break;
+                    case 2:
+                        if (bankEuro > 0)
+                        {
+                            Console.Write("Сколько валюты хотите перевести: ");
+                            float spros = Convert.ToSingle(Console.ReadLine());
+                            if (spros <= bankEuro)
+                            {
+                                bankEuro -= spros;
+                                bankRubles += spros * euro;
+                                Console.WriteLine($"Ваш балик euro - {bankEuro}, rub - {bankRubles}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Недостаточно средств");
+                            }
+
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Нет средств");
+                        }
+                        break;
+                    case 3:
+                        if (bankEuro > 0 && bankDollar > 0)
+                        {
+                            Console.Write("Подтверждаете обмен средств(Да/Нет): ");
+                            string otvetpolzovatelacom = Console.ReadLine().ToLower();
+                            if (otvetpolzovatelacom == "да")
+                            {
+                                bankRubles += bankEuro * euro + bankDollar * dollar;
+                                bankDollar = 0;
+                                bankEuro = 0;
+                                Console.WriteLine($"Ваш баланс: {bankRubles}");
+                            }
+                            else if (otvetpolzovatelacom == "нет")
+                            {
+                                Console.WriteLine("Ок, досвидания");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Недостаточно средств, на каком то из банков");
+                        }
+
+                        break;
+                    default:
+                        Console.WriteLine("Я вас не понимаю");
+                        Thread.Sleep(1000);
+                        break;
+                }
+                break;
+            default:
+                Console.WriteLine("Я вас не понял попробуйте снова");
+                Thread.Sleep(500);
+                break;
+        }
+        Console.WriteLine("Нажмите Enter для продолжения");
+        Console.ReadKey();
+        Console.Clear();
+    }
+    catch (Exception)
+    {
+        Console.WriteLine("Ну че то пошло не так, перепроверьте свои данные");
+        Console.ReadKey();
+        Console.Clear();
+    }
+}
+
+
+
+
+
+
+
